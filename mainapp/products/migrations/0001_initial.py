@@ -12,13 +12,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='User',
+            name='Product',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('first_name', models.CharField(max_length=16)),
-                ('last_name', models.CharField(max_length=16)),
-                ('email', models.EmailField(default='test@test.ru', max_length=255)),
-                ('encrypted_password', models.CharField(default='1234', max_length=255)),
+                ('name', models.CharField(max_length=100)),
+                ('description', models.CharField(max_length=1000)),
+                ('price', models.DecimalField(decimal_places=2, max_digits=8)),
             ],
         ),
     ]
