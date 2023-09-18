@@ -4,16 +4,17 @@ from rest_framework.views import APIView
 
 from cart.models import Cart
 from cart.serializers import CartSerializer
+from products.models import Product
 
 
 class CartView(APIView):
     permission_classes = ()
 
-    def post(self, request):
-        serializer = CartSerializer(data=request.data)
-        if serializer.is_valid():
-            serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    # def post(self, request):
+    #     serializer = CartSerializer(data=request.data)
+    #     if serializer.is_valid():
+    #         serializer.save()
+    #     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
     def get(self, request):
         cart = Cart.objects.all()
@@ -27,13 +28,19 @@ class CartDetail(APIView):
         serializer = CartSerializer(cart, many=True)
         return Response(serializer.data)
 
-    def delete(self, request, id):
-        carts = Cart.objects.filter(user_id=id).first()
-        carts.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+    def post(self, request, id):
+        cart = Cart(
+            products_id=request.data.get("products"),
+            quantity=request.data.get("quantity"),
+            price=request.data.get("price"),
+            user_id=id)
+        cart.save()
+        serializer = CartSerializer(cart)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class CartSingleEntity(APIView):
+
     def get(self, request, id, product_in_cart_id):
         product = Cart.objects.filter(id=product_in_cart_id, user_id=id).first()
         serializer = CartSerializer(product)
