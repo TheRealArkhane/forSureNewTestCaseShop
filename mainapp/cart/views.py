@@ -16,10 +16,10 @@ class CartView(APIView):
     #         serializer.save()
     #     return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    def get(self, request):
-        cart = Cart.objects.all()
-        serializer = CartSerializer(cart, many=True)
-        return Response(serializer.data)
+    # def get(self, request):
+    #     cart = Cart.objects.all()
+    #     serializer = CartSerializer(cart, many=True)
+    #     return Response(serializer.data)
 
 
 class CartDetail(APIView):
@@ -32,11 +32,30 @@ class CartDetail(APIView):
         cart = Cart(
             products_id=request.data.get("products"),
             quantity=request.data.get("quantity"),
-            price=request.data.get("price"),
+            price=Product.objects.filter(id=request.data.get("products")).first().price,
             user_id=id)
+
+        # I made unique constraint instead of this block
+
+        # -------->
+
+        # if len(Cart.objects.all()) == 0:
+        #     cart.save()
+        #     return Response(status=status.HTTP_201_CREATED)
+        # elif Cart.objects.filter(products_id=request.data.get("products")).first() is None:
+        #     cart.save()
+        #     return Response(status=status.HTTP_201_CREATED)
+        # elif (
+        #     Cart.objects.filter(products_id=request.data.get("products")).first().products_id
+        #         != request.data.get("products")
+        #         or id != Cart.objects.filter(user_id=id).first().user_id):
+        #     cart.save()
+        #     return Response(status=status.HTTP_201_CREATED)
+        # else:
+        #     return Response(status=status.HTTP_400_BAD_REQUEST)
+
         cart.save()
-        serializer = CartSerializer(cart)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(status=status.HTTP_201_CREATED)
 
 
 class CartSingleEntity(APIView):
