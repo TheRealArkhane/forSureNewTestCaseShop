@@ -23,5 +23,6 @@ from users.views import UsersView
 urlpatterns = [
     path('admin/', admin.site.urls),
     path("", include("products.urls")),
-    path("", include("users.urls"))
+    path("", include("users.urls")),
+    path("", include("cart.urls"))
 ]

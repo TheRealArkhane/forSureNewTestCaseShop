@@ -20,7 +20,7 @@ class ProductsView(APIView):
             serializer.save()
             products = Product.objects.all()
             serializer = ProductsSerializer(products, many=True)
-            return Response(serializer.data, status=status.HTTP_201_CREATED)
+            return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
@@ -37,8 +37,8 @@ class ProductDetail(APIView):
         serializer = ProductsSerializer(product, data=request.data)
         if serializer.is_valid():
             serializer.save()
-            return Response(serializer.data)
-        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_202_ACCEPTED)
+        return Response(status=status.HTTP_400_BAD_REQUEST)
 
     def delete(self, request, id):
         product = Product.objects.filter(id=id).first()
