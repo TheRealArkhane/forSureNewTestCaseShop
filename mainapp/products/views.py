@@ -21,7 +21,7 @@ class ProductsView(APIView):
             serializer = ProductsSerializer(products, many=True)
             return Response(serializer.data)
         elif max_value is None:
-            products = Product.objects.filter(price__range=(min_value, 10000000)).order_by('price').values()
+            products = Product.objects.filter(price__range=(min_value, 1000000000000)).order_by('price').values()
             serializer = ProductsSerializer(products, many=True)
             return Response(serializer.data)
         else:
