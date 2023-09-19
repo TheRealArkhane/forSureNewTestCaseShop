@@ -17,16 +17,15 @@ class OrderView(APIView):
         cart = Cart.objects.filter(user_id=id).all()
         if len(cart) == 0:
             return Response(status=status.HTTP_400_BAD_REQUEST)
-
+        order = Order(
+            user_id=id,
+            order_date=request.data.get("order_date")
+        )
+        order.save(force_insert=True)
         for item in cart:
-            order = Order(
-                order_date=request.data.get("order_date"),
-                quantity=item.quantity,
-                price=item.price,
-                user_id=item.user.id
-            )
-            order.save()
-        # cart.delete()
+            order.products.add(item.products)
+        order.save()
+        cart.delete()
         return Response(status=status.HTTP_201_CREATED)
 
 # Create your views here.
