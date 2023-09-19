@@ -8,8 +8,10 @@ class UsersSerializer(ModelSerializer):
         model = User
         fields = [
             'id',
-            'products',
-            'user_id',
-            'status'
+            'first_name',
+            'last_name',
+            'email',
+            'birthday',
+            'password'
         ]
 

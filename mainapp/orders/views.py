@@ -19,8 +19,7 @@ class OrderView(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         order = Order(
             user_id=id,
-            order_date=request.data.get("order_date")
-        )
+            order_date=request.data.get("order_date")) #логирование
         order.save(force_insert=True)
         for item in cart:
             order.products.add(item.products)
