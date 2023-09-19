@@ -32,7 +32,7 @@ class CartDetail(APIView):
         cart = Cart(
             products_id=request.data.get("products"),
             quantity=request.data.get("quantity"),
-            price=Product.objects.filter(id=request.data.get("products")).first().price,
+            price=Product.objects.filter(id=request.data.get("products")).first().price * request.data.get("quantity"),
             user_id=id)
 
         # I made unique constraint instead of this block
