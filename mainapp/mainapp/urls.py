@@ -25,6 +25,7 @@ urlpatterns = [
     path("", include("users.urls")),
     path("", include("cart.urls")),
     path("", include("orders.urls")),
+    path("", include("categories.urls")),
 
     re_path('signup', views.signup),
     re_path('login', views.login),

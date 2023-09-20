@@ -3,7 +3,7 @@ from django.db import models
 
 class Product(models.Model):
     id = models.BigAutoField
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, default='Товар')
     description = models.CharField(max_length=1000)
     price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
 

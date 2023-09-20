@@ -7,7 +7,6 @@ from .serializers import ProductsSerializer
 
 
 class ProductsView(APIView):
-    permission_classes = ()
 
     def get(self, request):
         min_value = request.data.get("min_value")
@@ -21,7 +20,7 @@ class ProductsView(APIView):
             serializer = ProductsSerializer(products, many=True)
             return Response(serializer.data)
         elif max_value is None:
-            products = Product.objects.filter(price__range=(min_value, 1000000000000)).order_by('price').values()
+            products = Product.objects.filter(price__range=(min_value, 1000000000)).order_by('price').values()
             serializer = ProductsSerializer(products, many=True)
             return Response(serializer.data)
         else:
@@ -38,7 +37,6 @@ class ProductsView(APIView):
 
 
 class ProductDetail(APIView):
-    permission_classes = ()
 
     def get(self, request, id):
         products = Product.objects.filter(id=id).first()

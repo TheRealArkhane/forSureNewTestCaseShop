@@ -7,7 +7,6 @@ from .serializers import UsersSerializer
 
 
 class UsersView(APIView):
-    permission_classes = ()
 
     def get(self, request):
         users = User.objects.all()
@@ -23,7 +22,6 @@ class UsersView(APIView):
 
 
 class UserDetail(APIView):
-    permission_classes = ()
 
     def get(self, request, id):
         user = User.objects.filter(id=id).first()
