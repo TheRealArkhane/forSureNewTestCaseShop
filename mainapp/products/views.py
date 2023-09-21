@@ -1,4 +1,6 @@
 from rest_framework import status
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -8,6 +10,7 @@ from .serializers import ProductsSerializer
 
 class ProductsView(APIView):
 
+    @permission_classes(AllowAny)
     def get(self, request):
         min_value = request.data.get("min_value")
         max_value = request.data.get("max_value")
@@ -28,6 +31,7 @@ class ProductsView(APIView):
             serializer = ProductsSerializer(products, many=True)
             return Response(serializer.data)
 
+    @permission_classes(IsAdminUser)
     def post(self, request):
         serializer = ProductsSerializer(data=request.data)
         if serializer.is_valid():
@@ -37,12 +41,13 @@ class ProductsView(APIView):
 
 
 class ProductDetail(APIView):
-
+    @permission_classes(AllowAny)
     def get(self, request, id):
         products = Product.objects.filter(id=id).first()
         serializer = ProductsSerializer(products)
         return Response(serializer.data)
 
+    @permission_classes(IsAdminUser)
     def put(self, request, id):
         product = Product.objects.filter(id=id).first()
         serializer = ProductsSerializer(product, data=request.data)
@@ -51,6 +56,7 @@ class ProductDetail(APIView):
             return Response(status=status.HTTP_202_ACCEPTED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
+    @permission_classes(IsAdminUser)
     def delete(self, request, id):
         product = Product.objects.filter(id=id).first()
         product.delete()

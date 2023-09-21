@@ -9,7 +9,6 @@ class CategorySerializer(ModelSerializer):
         fields = [
             'id',
             'name',
-            'parent_id',
-            'products'
+            'parent_id'
         ]
 
