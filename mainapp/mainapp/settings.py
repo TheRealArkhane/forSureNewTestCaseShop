@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
+    'drf_yasg',
     'mptt',
 
     'categories',
@@ -46,9 +47,21 @@ INSTALLED_APPS = [
 ]
 
 # REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': [
+#         'rest_framework.permissions.IsAuthenticated',
+#     ],
+#
+#     'DEFAULT_AUTHENTICATION_CLASSES': [
+#         'rest_framework.authentication.BasicAuthentication',
+#         'rest_framework.authentication.SessionAuthentication',
+#         #'rest_framework.authentication.TokenAuthentication',
+#     ],
 #     'DEFAULT_RENDERER_CLASSES': [
-#         'rest_framework.renderers.JSONRenderer',
-#     ]
+#         #'rest_framework.renderers.AdminRenderer',
+#         'rest_framework.renderers.BrowsableAPIRenderer',
+#         'rest_framework.renderers.JSONRenderer'
+#     ],
+#     'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend']
 # }
 
 MIDDLEWARE = [
@@ -79,6 +92,17 @@ TEMPLATES = [
     },
 ]
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": 'django.db.backends.postgresql',
+#         "NAME": 'test_case_shop',
+#         "USER": 'postgres',
+#         "PASSWORD": '1234',
+#         "HOST": 'localhost',
+#         "PORT": '5432',
+#     }
+# }
+
 WSGI_APPLICATION = 'mainapp.wsgi.application'
 
 # Database
@@ -91,8 +115,11 @@ DATABASES = {
     }
 }
 
+AUTHENTICATION_BACKENDS = ["django.contrib.auth.backends.ModelBackend"]
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
+
+AUTH_USER_MODEL = "users.User"
 
 AUTH_PASSWORD_VALIDATORS = [
     {

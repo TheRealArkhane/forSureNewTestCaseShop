@@ -15,9 +15,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import include, path, re_path
+from django.urls import include, path
 
-from mainapp import views
+from .yasg import urlpatterns as doc_urls
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -26,8 +26,6 @@ urlpatterns = [
     path("", include("cart.urls")),
     path("", include("orders.urls")),
     path("", include("categories.urls")),
-
-    re_path('signup', views.signup),
-    re_path('login', views.login),
-    re_path('test_token', views.test_token),
 ]
+
+urlpatterns += doc_urls

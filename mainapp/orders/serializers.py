@@ -10,5 +10,6 @@ class OrderSerializer(serializers.ModelSerializer):
             'id',
             'products',
             'user_id',
-            'status'
+            'status',
+            'order_date'
         ]
