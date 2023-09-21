@@ -1,5 +1,5 @@
 Describe:
-    This is a testcase for Fittin company's Python backend developer vacancy
+    This is a testcase for Fittin company's Python backend junior developer vacancy
     This project represents Python Django REST realization of e-commerce shop
 
 Project provides:
