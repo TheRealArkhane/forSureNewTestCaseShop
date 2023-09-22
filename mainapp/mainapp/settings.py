@@ -98,7 +98,7 @@ TEMPLATES = [
 #         "NAME": 'test_case_shop',
 #         "USER": 'postgres',
 #         "PASSWORD": '1234',
-#         "HOST": 'localhost',
+#         "HOST": 'localhost',  # to Docker - "database"
 #         "PORT": '5432',
 #     }
 # }

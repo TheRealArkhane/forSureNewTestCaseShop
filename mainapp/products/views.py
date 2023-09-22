@@ -1,15 +1,23 @@
+from drf_yasg.utils import swagger_auto_schema
 from rest_framework import status
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import AllowAny, IsAdminUser
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
+from categories.models import Category
 from .models import Product
 from .serializers import ProductsSerializer
 
 
 class ProductsView(APIView):
 
+    @swagger_auto_schema(
+        operation_summary="Получение списка всех товаров",
+        responses={
+            200: ProductsSerializer(many=True),
+            500: "Серверная ошибка"},
+    )
     @permission_classes(AllowAny)
     def get(self, request):
         min_value = request.data.get("min_value")
@@ -31,22 +39,53 @@ class ProductsView(APIView):
             serializer = ProductsSerializer(products, many=True)
             return Response(serializer.data)
 
+    @swagger_auto_schema(
+        operation_summary="Добавление товаров",
+        request_body=ProductsSerializer,
+        responses={
+            201: ProductsSerializer,
+            400: "Неправильный ввод данных",
+            500: "Серверная ошибка",
+        },
+    )
     @permission_classes(IsAdminUser)
     def post(self, request):
         serializer = ProductsSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
+            product_id = Product.objects.filter(
+                name=request.data.get("name"),
+                description=request.data.get("description"),
+                price=request.data.get("price")
+            ).first().id
+            Category.objects.filter(id=1).first().products.add(product_id)
             return Response(status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 
 class ProductDetail(APIView):
+
+    @swagger_auto_schema(
+        operation_summary="Получение конкретного товара",
+        responses={
+            200: ProductsSerializer(many=True),
+            500: "Серверная ошибка"},
+    )
     @permission_classes(AllowAny)
     def get(self, request, id):
         products = Product.objects.filter(id=id).first()
         serializer = ProductsSerializer(products)
         return Response(serializer.data)
 
+    @swagger_auto_schema(
+        operation_summary="Изменение конкретного товара",
+        responses={
+            202: "Изменения приняты",
+            400: "Неправильный ввод данных",
+            500: "Серверная ошибка",
+        },
+        request_body=ProductsSerializer
+    )
     @permission_classes(IsAdminUser)
     def put(self, request, id):
         product = Product.objects.filter(id=id).first()
@@ -56,6 +95,13 @@ class ProductDetail(APIView):
             return Response(status=status.HTTP_202_ACCEPTED)
         return Response(status=status.HTTP_400_BAD_REQUEST)
 
+    @swagger_auto_schema(
+        operation_summary="Удаление конкретного товара",
+        responses={
+            204: ProductsSerializer(many=True),
+            500: "Серверная ошибка"
+        }
+    )
     @permission_classes(IsAdminUser)
     def delete(self, request, id):
         product = Product.objects.filter(id=id).first()

@@ -16,10 +16,9 @@ services:
   backend:
     container_name: django_backend
     build: .
-    command: bash -c 'python manage.py dumpdata > data.json
+    command: bash -c 'pip install -r requirements.txt
                       && python manage.py makemigrations
                       && python manage.py migrate
-                      && python3 manage.py loaddata data.json
                       && python manage.py runserver 0.0.0.0:8080'
     ports:
       - '8080:8080'

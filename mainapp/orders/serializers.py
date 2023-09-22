@@ -9,7 +9,10 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = [
             'id',
             'products',
+            'sum',
+            'total_quantity',
             'user_id',
+            'address',
             'status',
             'order_date'
         ]

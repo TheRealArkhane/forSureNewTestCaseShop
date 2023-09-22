@@ -8,6 +8,7 @@ class Cart(models.Model):
     products = models.ForeignKey(Product, related_name="carts", blank=True, on_delete=models.CASCADE)
     quantity = models.IntegerField(default=1)
     price = models.DecimalField(max_digits=12, decimal_places=2, default=0)
+    sum = models.DecimalField(max_digits=12, decimal_places=2, default=0)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="users", blank=True)
 
     class Meta:
