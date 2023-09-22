@@ -11,16 +11,19 @@
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
     </data-source>
-    <data-source source="LOCAL" name="db" uuid="119761b9-d8f1-4573-9d3a-0320c4dc0f46">
+    <data-source source="LOCAL" name="db" uuid="767bfed6-c9a9-46ff-b1f1-09653fda6ea3">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Users\Fedyanin\PycharmProjects\forSureNewTestCaseShop\mainapp\db.sqlite3</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Users\Victor\PycharmProjects\forSureNewTestCaseShop\mainapp\db.sqlite3</jdbc-url>
       <jdbc-additional-properties>
         <property name="com.intellij.clouds.kubernetes.db.enabled" value="false" />
       </jdbc-additional-properties>
       <working-dir>$ProjectFileDir$</working-dir>
       <libraries>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.43.0/sqlite-jdbc-3.43.0.0.jar</url>
+        </library>
         <library>
           <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.43.0/sqlite-jdbc-3.43.0.0.jar</url>
         </library>
